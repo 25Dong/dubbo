@@ -25,6 +25,11 @@ import java.util.concurrent.CompletableFuture;
 
 @Component("demoServiceComponent")
 public class DemoServiceComponent implements DemoService {
+
+    public DemoServiceComponent() {
+
+    }
+
     @DubboReference
     private DemoService demoService;
 

@@ -66,7 +66,7 @@ public class Proxy {
         }
 
         // ClassLoader from App Interface should support load some class from Dubbo
-        ClassLoader cl = ics[0].getClassLoader();
+        ClassLoader cl = ics[0].getClassLoader();//类加载器
         ProtectionDomain domain = ics[0].getProtectionDomain();
 
         // use interface class name list as key.
@@ -82,10 +82,10 @@ public class Proxy {
         if (proxy == null) {
             synchronized (ics[0]) {
                 proxy = cache.get(key);
-                if (proxy == null) {
+                if (proxy == null) {//double check
                     // create Proxy class.
                     proxy = new Proxy(buildProxyClass(cl, ics, domain));
-                    cache.put(key, proxy);
+                    cache.put(key, proxy);//创建代理类并放入缓存
                 }
             }
         }

@@ -30,6 +30,7 @@ import org.apache.dubbo.rpc.proxy.jdk.JdkProxyFactory;
 import java.util.Arrays;
 
 /**
+ * Javassist
  * JavassistRpcProxyFactory
  */
 public class JavassistProxyFactory extends AbstractProxyFactory {

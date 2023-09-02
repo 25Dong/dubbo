@@ -26,12 +26,33 @@ import org.junit.jupiter.api.condition.JRE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@DisabledForJreRange(min = JRE.JAVA_16)
+//@DisabledForJreRange(min = JRE.JAVA_16)
 public class ProxyTest {
+
+
+    @Test
+    public void test() throws Exception {
+        Proxy proxy = Proxy.getProxy(ITest.class);
+
+        ITest instance = (ITest) proxy.newInstance((proxy1, method, args) -> {
+            if ("getName".equals(method.getName())) {
+                assertEquals(args.length, 0);
+            } else if ("setName".equals(method.getName())) {
+                assertEquals(args.length, 2);
+                assertEquals(args[0], "ycd");
+                assertEquals(args[1], "hello");
+            }
+            return null;
+        });
+
+        assertNull(instance.getName());
+        instance.setName("ycd", "hello");
+    }
 
     @Test
     public void testMain() throws Exception {
         Proxy proxy = Proxy.getProxy(ITest.class, ITest.class);
+
         ITest instance = (ITest) proxy.newInstance((proxy1, method, args) -> {
             if ("getName".equals(method.getName())) {
                 assertEquals(args.length, 0);

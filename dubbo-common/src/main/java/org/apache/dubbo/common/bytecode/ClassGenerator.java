@@ -45,6 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * Class 生成器
  * ClassGenerator
  */
 public final class ClassGenerator {
@@ -349,6 +350,9 @@ public final class ClassGenerator {
             }
 
             try {
+                /**
+                 * javassist 生成Class对象
+                 */
                 return mPool.toClass(mCtc, neighborClass, loader, pd);
             } catch (Throwable t) {
                 if (!(t instanceof CannotCompileException)) {

@@ -29,6 +29,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
+ * 调用句柄
  * InvokerHandler
  */
 public class InvokerInvocationHandler implements InvocationHandler {
