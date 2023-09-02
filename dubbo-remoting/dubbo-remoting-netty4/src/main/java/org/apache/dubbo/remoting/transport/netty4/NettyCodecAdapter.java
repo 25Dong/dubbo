@@ -35,6 +35,9 @@ import java.util.List;
  */
 final public class NettyCodecAdapter {
 
+    /**
+     * 编码器
+     */
     private final ChannelHandler encoder = new InternalEncoder();
 
     private final ChannelHandler decoder = new InternalDecoder();

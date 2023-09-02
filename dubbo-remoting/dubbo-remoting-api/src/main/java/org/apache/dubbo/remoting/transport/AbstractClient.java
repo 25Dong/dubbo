@@ -62,6 +62,7 @@ public abstract class AbstractClient extends AbstractEndpoint implements Client 
         initExecutor(url);
 
         try {
+            //open
             doOpen();
         } catch (Throwable t) {
             close();
@@ -198,6 +199,9 @@ public abstract class AbstractClient extends AbstractEndpoint implements Client 
         if (channel == null || !channel.isConnected()) {
             throw new RemotingException(this, "message can not send, because channel is closed . url:" + getUrl());
         }
+        /**
+         * 通过Netty的Channel发送数据
+         */
         channel.send(message, sent);
     }
 

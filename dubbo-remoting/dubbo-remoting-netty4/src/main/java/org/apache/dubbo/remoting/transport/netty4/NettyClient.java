@@ -106,6 +106,10 @@ public class NettyClient extends AbstractClient {
         return new NettyClientHandler(getUrl(), this);
     }
 
+    /**
+     * 初始化Netty的Client Bootstrap
+     * @param nettyClientHandler
+     */
     protected void initBootstrap(NettyClientHandler nettyClientHandler) {
         bootstrap.group(EVENT_LOOP_GROUP.get())
                 .option(ChannelOption.SO_KEEPALIVE, true)
@@ -127,8 +131,8 @@ public class NettyClient extends AbstractClient {
 
                 NettyCodecAdapter adapter = new NettyCodecAdapter(getCodec(), getUrl(), NettyClient.this);
                 ch.pipeline()//.addLast("logging",new LoggingHandler(LogLevel.INFO))//for debug
-                        .addLast("decoder", adapter.getDecoder())
-                        .addLast("encoder", adapter.getEncoder())
+                        .addLast("decoder", adapter.getDecoder())//编码器
+                        .addLast("encoder", adapter.getEncoder())//解码器
                         .addLast("client-idle-handler", new IdleStateHandler(heartbeatInterval, 0, 0, MILLISECONDS))
                         .addLast("handler", nettyClientHandler);
 
@@ -147,6 +151,10 @@ public class NettyClient extends AbstractClient {
         return StringUtils.isEquals(NetUtils.getLocalHost(), host) || NetUtils.isLocalHost(host);
     }
 
+    /**
+     * 消费端发起连接
+     * @throws Throwable
+     */
     @Override
     protected void doConnect() throws Throwable {
         long start = System.currentTimeMillis();
@@ -182,6 +190,7 @@ public class NettyClient extends AbstractClient {
                             NettyChannel.removeChannelIfDisconnected(newChannel);
                         }
                     } else {
+                        //缓存channel
                         NettyClient.this.channel = newChannel;
                     }
                 }

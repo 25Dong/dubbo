@@ -23,12 +23,16 @@ import java.util.concurrent.atomic.AtomicLong;
 import static org.apache.dubbo.common.constants.CommonConstants.HEARTBEAT_EVENT;
 
 /**
+ * 请求信息
  * Request.
  */
 public class Request {
 
     private static final AtomicLong INVOKE_ID = new AtomicLong(0);
 
+    /**
+     * 唯一自增ID
+     */
     private final long mId;
 
     private String mVersion;
@@ -39,6 +43,9 @@ public class Request {
 
     private boolean mBroken = false;
 
+    /**
+     * @see  org.apache.dubbo.rpc.RpcInvocation
+     */
     private Object mData;
 
     public Request() {

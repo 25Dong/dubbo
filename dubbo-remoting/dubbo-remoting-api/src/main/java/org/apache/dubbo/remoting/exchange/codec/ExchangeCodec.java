@@ -228,11 +228,18 @@ public class ExchangeCodec extends TelnetCodec {
         throw new IllegalArgumentException("Failed to find any request match the response, response id: " + id);
     }
 
+    /**
+     * 请求信息Request的编码
+     * @param channel
+     * @param buffer
+     * @param req
+     * @throws IOException
+     */
     protected void encodeRequest(Channel channel, ChannelBuffer buffer, Request req) throws IOException {
         Serialization serialization = getSerialization(channel, req);
-        // header.
+        // header. 头部信息
         byte[] header = new byte[HEADER_LENGTH];
-        // set magic number.
+        // set magic number. 1.魔数
         Bytes.short2bytes(MAGIC, header);
 
         // set request and serialization flag.

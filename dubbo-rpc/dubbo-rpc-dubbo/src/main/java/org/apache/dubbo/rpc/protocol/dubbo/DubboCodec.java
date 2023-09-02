@@ -186,6 +186,14 @@ public class DubboCodec extends ExchangeCodec {
         encodeResponseData(channel, out, data, DUBBO_VERSION);
     }
 
+    /**
+     * 对请求的Data内容进行编码
+     * @param channel
+     * @param out
+     * @param data
+     * @param version
+     * @throws IOException
+     */
     @Override
     protected void encodeRequestData(Channel channel, ObjectOutput out, Object data, String version) throws IOException {
         RpcInvocation inv = (RpcInvocation) data;
@@ -196,12 +204,12 @@ public class DubboCodec extends ExchangeCodec {
         if (serviceName == null) {
             serviceName = inv.getAttachment(PATH_KEY);
         }
-        out.writeUTF(serviceName);
+        out.writeUTF(serviceName);//调用的服务名
         out.writeUTF(inv.getAttachment(VERSION_KEY));
 
-        out.writeUTF(inv.getMethodName());
-        out.writeUTF(inv.getParameterTypesDesc());
-        Object[] args = inv.getArguments();
+        out.writeUTF(inv.getMethodName());//调用的方法
+        out.writeUTF(inv.getParameterTypesDesc());//参数类型
+        Object[] args = inv.getArguments();//参数
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
                 out.writeObject(callbackServiceCodec.encodeInvocationArgument(channel, inv, i));

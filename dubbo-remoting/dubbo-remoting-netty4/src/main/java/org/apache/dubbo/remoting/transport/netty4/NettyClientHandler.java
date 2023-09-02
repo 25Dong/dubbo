@@ -33,6 +33,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import static org.apache.dubbo.common.constants.CommonConstants.HEARTBEAT_EVENT;
 
 /**
+ * 缓存了URL的ChannelDuplexHandler
  * NettyClientHandler
  */
 @io.netty.channel.ChannelHandler.Sharable

@@ -29,7 +29,13 @@ import static org.apache.dubbo.common.constants.CommonConstants.PATH_SEPARATOR;
 public class URLAddress implements Serializable {
     private static final long serialVersionUID = -1985165475234910535L;
 
+    /**
+     * 地址
+     */
     protected String host;
+    /**
+     * 端口
+     */
     protected int port;
 
     // cache
