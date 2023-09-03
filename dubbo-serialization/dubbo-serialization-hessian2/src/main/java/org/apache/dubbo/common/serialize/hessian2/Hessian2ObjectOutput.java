@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * Hessian是一种二进制序列化协议，
+ * Dubbo使用Hessian序列化时，数据以更紧凑的格式进行编码。Hessian序列化可以将Java对象编码为二进制数据，并可以将二进制数据还原为原始对象
+ *
  * Hessian2 object output implementation
  */
 public class Hessian2ObjectOutput implements ObjectOutput, Cleanable {

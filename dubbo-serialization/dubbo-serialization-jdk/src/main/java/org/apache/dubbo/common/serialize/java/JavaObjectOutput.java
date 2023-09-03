@@ -23,6 +23,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 /**
+ * Java标准序列化是一种最常见的序列化方式，它将对象转换为字节流，并将其写入输出流。
+ * Dubbo中使用Java标准序列化时，对象需要实现Serializable接口。Java标准序列化可以将对象的字段以二进制方式写入字节流中
+ *
  * Java object output implementation
  */
 public class JavaObjectOutput extends NativeJavaObjectOutput {
