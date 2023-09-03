@@ -259,7 +259,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
              * must call {@link java.util.concurrent.CompletableFuture#get(long, TimeUnit)} because
              * {@link java.util.concurrent.CompletableFuture#get()} was proved to have serious performance drop.
              */
-            Object timeout = invocation.getObjectAttachmentWithoutConvert(TIMEOUT_KEY);
+            Object timeout = invocation.getObjectAttachmentWithoutConvert(TIMEOUT_KEY);//取出RPC调用设置的请求超时时间
             if (timeout instanceof Integer) {
                 asyncResult.get((Integer) timeout, TimeUnit.MILLISECONDS);
             } else {
@@ -282,6 +282,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
                     invocation.getMethodName() + ", provider: " + getUrl() + ", cause: " + e.getMessage(), e);
             }
         } catch (java.util.concurrent.TimeoutException e) {
+            //抛出超时异常
             throw new RpcException(RpcException.TIMEOUT_EXCEPTION, "Invoke remote method timeout. method: " +
                 invocation.getMethodName() + ", provider: " + getUrl() + ", cause: " + e.getMessage(), e);
         } catch (Throwable e) {

@@ -240,6 +240,7 @@ public @interface DubboReference {
     String validation() default "";
 
     /**
+     * 超时等待时间
      * Timeout value for service invocation, default value is 0
      */
     int timeout() default -1;

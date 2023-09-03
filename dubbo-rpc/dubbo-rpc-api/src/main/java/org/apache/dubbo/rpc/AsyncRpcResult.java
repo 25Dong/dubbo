@@ -192,7 +192,7 @@ public class AsyncRpcResult implements Result {
             ThreadlessExecutor threadlessExecutor = (ThreadlessExecutor) executor;
             threadlessExecutor.waitAndDrain();
         }
-        return responseFuture.get(timeout, unit);
+        return responseFuture.get(timeout, unit);//设置超时时间等待
     }
 
     @Override

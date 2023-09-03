@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @DubboService
 public class DemoServiceImpl implements DemoService {
@@ -31,6 +32,11 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public String sayHello(String name) {
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         logger.info("Hello " + name + ", request from consumer: " + RpcContext.getServiceContext().getRemoteAddress());
         return "Hello " + name + ", response from provider: " + RpcContext.getServiceContext().getLocalAddress();
     }

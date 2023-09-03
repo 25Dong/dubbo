@@ -100,7 +100,7 @@ public class DubboInvoker<T> extends AbstractInvoker<T> {
         try {
             boolean isOneway = RpcUtils.isOneway(getUrl(), invocation);
             int timeout = calculateTimeout(invocation, methodName);
-            invocation.setAttachment(TIMEOUT_KEY, timeout);
+            invocation.setAttachment(TIMEOUT_KEY, timeout);//设置请求超时时间
             if (isOneway) {
                 boolean isSent = getUrl().getMethodParameter(methodName, Constants.SENT_KEY, false);
                 currentClient.send(inv, isSent);
