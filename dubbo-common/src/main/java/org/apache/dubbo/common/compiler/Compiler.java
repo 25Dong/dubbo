@@ -20,6 +20,7 @@ import org.apache.dubbo.common.extension.ExtensionScope;
 import org.apache.dubbo.common.extension.SPI;
 
 /**
+ * 默认类型为javassist
  * Compiler. (SPI, Singleton, ThreadSafe)
  */
 @SPI(value = "javassist", scope = ExtensionScope.FRAMEWORK)

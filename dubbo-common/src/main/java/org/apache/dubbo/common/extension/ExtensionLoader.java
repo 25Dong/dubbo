@@ -1338,9 +1338,11 @@ public class ExtensionLoader<T> {
         } catch (Throwable ignore) {
 
         }
+        //生成代码
         String code = new AdaptiveClassCodeGenerator(type, cachedDefaultName).generate();
         org.apache.dubbo.common.compiler.Compiler compiler = extensionDirector.getExtensionLoader(
             org.apache.dubbo.common.compiler.Compiler.class).getAdaptiveExtension();
+        //进行编译成Class对象
         return compiler.compile(type, code, classLoader);
     }
 

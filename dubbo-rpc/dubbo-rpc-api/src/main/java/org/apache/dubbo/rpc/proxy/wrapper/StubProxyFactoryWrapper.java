@@ -49,6 +49,10 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StubProxyFactoryWrapper.class);
 
+    /**
+     * 该代理工厂是通过什么方式赋值的？
+     * A:反射
+     */
     private final ProxyFactory proxyFactory;
 
     private Protocol protocol;
