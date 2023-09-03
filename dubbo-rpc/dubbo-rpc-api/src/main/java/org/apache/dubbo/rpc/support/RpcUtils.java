@@ -207,11 +207,11 @@ public class RpcUtils {
         }
 
         if (isReturnTypeFuture(inv)) {
-            return InvokeMode.FUTURE;
+            return InvokeMode.FUTURE;//返回值类型是
         } else if (isAsync(url, inv)) {
-            return InvokeMode.ASYNC;
+            return InvokeMode.ASYNC;//异步调用
         } else {
-            return InvokeMode.SYNC;
+            return InvokeMode.SYNC;//同步调用
         }
     }
 

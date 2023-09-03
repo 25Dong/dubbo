@@ -75,6 +75,13 @@ public class DecodeableRpcResult extends AppResponse implements Codec, Decodeabl
         throw new UnsupportedOperationException();
     }
 
+    /**
+     *  解码
+     * @param channel channel.
+     * @param input   input stream.
+     * @return
+     * @throws IOException
+     */
     @Override
     public Object decode(Channel channel, InputStream input) throws IOException {
         if (log.isDebugEnabled()) {
@@ -86,17 +93,18 @@ public class DecodeableRpcResult extends AppResponse implements Codec, Decodeabl
         if (invocation != null && invocation.getServiceModel() != null) {
             Thread.currentThread().setContextClassLoader(invocation.getServiceModel().getClassLoader());
         }
+        //反序列化（输入流）
         ObjectInput in = CodecSupport.getSerialization(channel.getUrl(), serializationType)
                 .deserialize(channel.getUrl(), input);
 
         byte flag = in.readByte();
         switch (flag) {
-            case DubboCodec.RESPONSE_NULL_VALUE:
+            case DubboCodec.RESPONSE_NULL_VALUE://返回null
                 break;
-            case DubboCodec.RESPONSE_VALUE:
+            case DubboCodec.RESPONSE_VALUE://返回值
                 handleValue(in);
                 break;
-            case DubboCodec.RESPONSE_WITH_EXCEPTION:
+            case DubboCodec.RESPONSE_WITH_EXCEPTION://返回异常
                 handleException(in);
                 break;
             case DubboCodec.RESPONSE_NULL_VALUE_WITH_ATTACHMENTS:
@@ -156,6 +164,9 @@ public class DecodeableRpcResult extends AppResponse implements Codec, Decodeabl
             } else {
                 returnTypes = RpcUtils.getReturnTypes(invocation);
             }
+            /**
+             * 取出远程调用返回的结果
+             */
             Object value;
             if (ArrayUtils.isEmpty(returnTypes)) {
                 // This almost never happens?
@@ -163,9 +174,12 @@ public class DecodeableRpcResult extends AppResponse implements Codec, Decodeabl
             } else if (returnTypes.length == 1) {
                 value = in.readObject((Class<?>) returnTypes[0]);
             } else {
+                //(Class<?>) returnTypes[0] 返回值对应的Class类型
+                //returnTypes[1] 如果返回值是泛型，则第参数标识泛型的类型
                 value = in.readObject((Class<?>) returnTypes[0], returnTypes[1]);
             }
             setValue(value);
+            log.info("程调用返回的结果 :" +value);
         } catch (ClassNotFoundException e) {
             rethrow(e);
         }

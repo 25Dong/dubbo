@@ -181,7 +181,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
         // do invoke rpc invocation and return async result
         AsyncRpcResult asyncResult = doInvokeAndReturn(invocation);
 
-        // wait rpc result if sync
+        // wait rpc result if sync（如果是同步调用会等待RPC结果返回）
         waitForResultIfSync(asyncResult, invocation);
 
         return asyncResult;
@@ -293,7 +293,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
 
     protected ExecutorService getCallbackExecutor(URL url, Invocation inv) {
         if (InvokeMode.SYNC == RpcUtils.getInvokeMode(getUrl(), inv)) {
-            return new ThreadlessExecutor();
+            return new ThreadlessExecutor();//同步调用，每一次调用都new一个线程执行器
         }
         return url.getOrDefaultApplicationModel().getExtensionLoader(ExecutorRepository.class)
             .getDefaultExtension()

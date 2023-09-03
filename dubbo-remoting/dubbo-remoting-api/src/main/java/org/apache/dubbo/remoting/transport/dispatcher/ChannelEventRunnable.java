@@ -22,6 +22,10 @@ import org.apache.dubbo.common.threadlocal.InternalThreadLocal;
 import org.apache.dubbo.remoting.Channel;
 import org.apache.dubbo.remoting.ChannelHandler;
 
+/**
+ * 通道事件任务
+ * ChannelEventRunnable
+ */
 public class ChannelEventRunnable implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(ChannelEventRunnable.class);
 
@@ -56,6 +60,7 @@ public class ChannelEventRunnable implements Runnable {
         InternalThreadLocal.removeAll();
         if (state == ChannelState.RECEIVED) {
             try {
+                //接收事件：编码-处理返回值
                 handler.received(channel, message);
             } catch (Exception e) {
                 logger.warn("ChannelEventRunnable handle " + state + " operation error, channel is " + channel

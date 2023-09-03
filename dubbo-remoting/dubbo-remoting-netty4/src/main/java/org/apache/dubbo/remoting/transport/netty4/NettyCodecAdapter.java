@@ -39,7 +39,9 @@ final public class NettyCodecAdapter {
      * 编码器
      */
     private final ChannelHandler encoder = new InternalEncoder();
-
+    /**
+     * 解码器
+     */
     private final ChannelHandler decoder = new InternalDecoder();
 
     private final Codec2 codec;

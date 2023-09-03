@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The most important difference between this Executor and other normal Executor is that this one doesn't manage
- * any thread.
+ * any thread. （没有管理任何线程）
  * <p>
  * Tasks submitted to this executor through {@link #execute(Runnable)} will not get scheduled to a specific thread, though normal executors always do the schedule.
  * Those tasks are stored in a blocking queue and will only be executed when a thread calls {@link #waitAndDrain()}, the thread executing the task
@@ -44,6 +44,9 @@ public class ThreadlessExecutor extends AbstractExecutorService {
 
     private boolean finished = false;
 
+    /**
+     * 默认为等待任务状态
+     */
     private volatile boolean waiting = true;
 
     private final Object lock = new Object();
@@ -92,7 +95,9 @@ public class ThreadlessExecutor extends AbstractExecutorService {
 
         Runnable runnable;
         try {
-            runnable = queue.take();
+            logger.info("准备获取返回任务");
+            runnable = queue.take();//阻塞等待有结果返回
+            logger.info("获取到了返回任务"+runnable);
         } catch (InterruptedException e) {
             setWaiting(false);
             throw e;
@@ -127,6 +132,7 @@ public class ThreadlessExecutor extends AbstractExecutorService {
                 return;
             }
             queue.add(runnable);
+            logger.info("添加返回任务："+runnable);
         }
     }
 

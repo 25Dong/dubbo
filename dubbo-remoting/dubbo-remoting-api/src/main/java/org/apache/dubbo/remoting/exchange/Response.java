@@ -19,6 +19,7 @@ package org.apache.dubbo.remoting.exchange;
 import static org.apache.dubbo.common.constants.CommonConstants.HEARTBEAT_EVENT;
 
 /**
+ * 响应信息
  * Response
  */
 public class Response {
