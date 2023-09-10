@@ -75,8 +75,8 @@ public class DubboCodec extends ExchangeCodec {
     protected Object decodeBody(Channel channel, InputStream is, byte[] header) throws IOException {
         byte flag = header[2], proto = (byte) (flag & SERIALIZATION_MASK);
         // get request id.
-        long id = Bytes.bytes2long(header, 4);
-        if ((flag & FLAG_REQUEST) == 0) {
+        long id = Bytes.bytes2long(header, 4);//请求唯一id
+        if ((flag & FLAG_REQUEST) == 0) {//返回消息的解码
             // decode response.
             Response res = new Response(id);
             if ((flag & FLAG_EVENT) != 0) {
@@ -124,7 +124,7 @@ public class DubboCodec extends ExchangeCodec {
             }
             return res;
         } else {
-            // decode request.
+            // decode request. 对请求信息的解码
             Request req = new Request(id);
             req.setVersion(Version.getProtocolVersion());
             req.setTwoWay((flag & FLAG_TWOWAY) != 0);
@@ -153,7 +153,7 @@ public class DubboCodec extends ExchangeCodec {
                     }
                     data = inv;
                 }
-                req.setData(data);
+                req.setData(data);//请求参数
             } catch (Throwable t) {
                 if (log.isWarnEnabled()) {
                     log.warn("Decode request failed: " + t.getMessage(), t);

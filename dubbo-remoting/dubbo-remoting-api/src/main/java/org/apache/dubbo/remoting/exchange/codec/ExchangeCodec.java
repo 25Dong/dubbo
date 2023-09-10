@@ -83,7 +83,7 @@ public class ExchangeCodec extends TelnetCodec {
     public Object decode(Channel channel, ChannelBuffer buffer) throws IOException {
         int readable = buffer.readableBytes();
         byte[] header = new byte[Math.min(readable, HEADER_LENGTH)];
-        buffer.readBytes(header);
+        buffer.readBytes(header);//读出头部的数据
         return decode(channel, buffer, readable, header);
     }
 
@@ -106,7 +106,7 @@ public class ExchangeCodec extends TelnetCodec {
             }
             return super.decode(channel, buffer, readable, header);
         }
-        // check length.
+        // check length. 检测数据包的头部长度
         if (readable < HEADER_LENGTH) {
             return DecodeResult.NEED_MORE_INPUT;
         }
@@ -122,7 +122,7 @@ public class ExchangeCodec extends TelnetCodec {
         }
 
         int tt = len + HEADER_LENGTH;
-        if (readable < tt) {
+        if (readable < tt) {//检查数据包长度
             return DecodeResult.NEED_MORE_INPUT;
         }
 
@@ -130,7 +130,7 @@ public class ExchangeCodec extends TelnetCodec {
         ChannelBufferInputStream is = new ChannelBufferInputStream(buffer, len);
 
         try {
-            return decodeBody(channel, is, header);
+            return decodeBody(channel, is, header);//对Body的数据进行解码
         } finally {
             if (is.available() > 0) {
                 try {

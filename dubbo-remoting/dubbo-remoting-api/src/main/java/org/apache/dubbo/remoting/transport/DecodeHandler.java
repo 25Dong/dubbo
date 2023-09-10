@@ -44,6 +44,7 @@ public class DecodeHandler extends AbstractChannelHandlerDelegate {
         }
 
         if (message instanceof Request) {
+            //对请求信息进行解码
             decode(((Request) message).getData());
         }
 

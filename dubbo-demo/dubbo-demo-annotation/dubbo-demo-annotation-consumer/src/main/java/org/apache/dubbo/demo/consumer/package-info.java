@@ -13,6 +13,8 @@
  * @see org.apache.dubbo.remoting.transport.AbstractClient#send(Object, boolean) 通过Netty发送数据
  * @see org.apache.dubbo.remoting.transport.netty4.NettyCodecAdapter.InternalDecoder 编码器
  * @see org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(Channel, ObjectOutput, Object, String) 对RpcInvocation对象进行编码
+ * @see org.apache.dubbo.remoting.transport.netty4.NettyCodecAdapter.InternalDecoder 解码器
+ *
  */
 package org.apache.dubbo.demo.consumer;
 
