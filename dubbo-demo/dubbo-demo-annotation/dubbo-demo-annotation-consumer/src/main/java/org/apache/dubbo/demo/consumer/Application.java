@@ -40,7 +40,6 @@ public class Application {
         DemoService service = context.getBean("demoServiceComponent", DemoServiceComponent.class);
         System.out.println(service.getClass());
         String hello = service.sayHello("world");
-         hello = service.sayHello("world");
         System.out.println("result :" + hello);
         LOGGER.error("PRC resp is " + hello);
     }

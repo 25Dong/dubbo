@@ -212,10 +212,10 @@ public class DubboCodec extends ExchangeCodec {
         Object[] args = inv.getArguments();//参数
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
-                out.writeObject(callbackServiceCodec.encodeInvocationArgument(channel, inv, i));
+                out.writeObject(callbackServiceCodec.encodeInvocationArgument(channel, inv, i));//调用方法的参数
             }
         }
-        out.writeAttachments(inv.getObjectAttachments());
+        out.writeAttachments(inv.getObjectAttachments());//调用的附加信息
     }
 
     @Override

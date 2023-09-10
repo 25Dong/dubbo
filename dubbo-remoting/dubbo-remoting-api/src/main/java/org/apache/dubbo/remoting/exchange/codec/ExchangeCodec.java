@@ -70,6 +70,7 @@ public class ExchangeCodec extends TelnetCodec {
     @Override
     public void encode(Channel channel, ChannelBuffer buffer, Object msg) throws IOException {
         if (msg instanceof Request) {
+            //请求编码
             encodeRequest(channel, buffer, (Request) msg);
         } else if (msg instanceof Response) {
             encodeResponse(channel, buffer, (Response) msg);
@@ -230,14 +231,21 @@ public class ExchangeCodec extends TelnetCodec {
 
     /**
      * 请求信息Request的编码
+     *
      * @param channel
      * @param buffer
-     * @param req
+     * @param req 请求信息
      * @throws IOException
+     * byte[] header 请求头部的内容
+     * [0~1] Magic：魔数固定值
+     * [2] 请求方式：请求是否有返回
+     * [3] null:没有数据
+     * [4~11] 请求id（8个字节）
+     * [12~15] 数据长度（信息头+信息体）
      */
     protected void encodeRequest(Channel channel, ChannelBuffer buffer, Request req) throws IOException {
         Serialization serialization = getSerialization(channel, req);
-        // header. 头部信息
+        // header. 头部信息（16个字节）
         byte[] header = new byte[HEADER_LENGTH];
         // set magic number. 1.魔数
         Bytes.short2bytes(MAGIC, header);
@@ -264,6 +272,7 @@ public class ExchangeCodec extends TelnetCodec {
             // heartbeat request data is always null
             bos.write(CodecSupport.getNullBytesOf(serialization));
         } else {
+            //对请求数据进行序列化
             ObjectOutput out = serialization.serialize(channel.getUrl(), bos);
             if (req.isEvent()) {
                 encodeEventData(channel, out, req.getData());

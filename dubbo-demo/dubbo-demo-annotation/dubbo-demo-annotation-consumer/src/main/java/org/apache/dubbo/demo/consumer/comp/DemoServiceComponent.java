@@ -30,7 +30,7 @@ public class DemoServiceComponent implements DemoService {
 
     }
 
-    @DubboReference
+    @DubboReference(timeout=1000000)
     private DemoService demoService;
 
     @Override

@@ -300,6 +300,9 @@ public interface CommonConstants {
 
     String BACKLOG_KEY = "backlog";
 
+    /**
+     * 事件类型
+     */
     String HEARTBEAT_EVENT = null;
     String MOCK_HEARTBEAT_EVENT = "H";
     String READONLY_EVENT = "R";
