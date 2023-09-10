@@ -134,7 +134,7 @@ public class DefaultExecutorRepository implements ExecutorRepository, ExtensionA
 
         // Consumer's executor is sharing globally, key=Integer.MAX_VALUE. Provider's executor is sharing by protocol.
         Integer portKey = CONSUMER_SIDE.equalsIgnoreCase(url.getParameter(SIDE_KEY)) ? Integer.MAX_VALUE : url.getPort();
-        ExecutorService executor = executors.get(portKey);
+        ExecutorService executor = executors.get(portKey);//更具端口来获取窒执行服务
         if (executor != null && (executor.isShutdown() || executor.isTerminated())) {
             executors.remove(portKey);
             // Does not re-create a shutdown executor, use SHARED_EXECUTOR for downgrade.

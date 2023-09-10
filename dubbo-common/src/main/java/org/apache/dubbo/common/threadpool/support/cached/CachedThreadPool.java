@@ -46,6 +46,11 @@ import static org.apache.dubbo.common.constants.CommonConstants.THREAD_NAME_KEY;
  */
 public class CachedThreadPool implements ThreadPool {
 
+    /***
+     * 根据URL信息创建线程池
+     * @param url URL contains thread parameter
+     * @return
+     */
     @Override
     public Executor getExecutor(URL url) {
         String name = url.getParameter(THREAD_NAME_KEY, (String) url.getAttribute(THREAD_NAME_KEY, DEFAULT_THREAD_NAME));

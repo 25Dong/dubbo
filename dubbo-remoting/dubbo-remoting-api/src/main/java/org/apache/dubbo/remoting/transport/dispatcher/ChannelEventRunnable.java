@@ -60,7 +60,7 @@ public class ChannelEventRunnable implements Runnable {
         InternalThreadLocal.removeAll();
         if (state == ChannelState.RECEIVED) {
             try {
-                //接收事件：编码-处理返回值
+                //接收事件：编码-（消费端）处理返回值/(生产端)返回结果
                 handler.received(channel, message);
             } catch (Exception e) {
                 logger.warn("ChannelEventRunnable handle " + state + " operation error, channel is " + channel
