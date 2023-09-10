@@ -73,6 +73,7 @@ public class ExchangeCodec extends TelnetCodec {
             //请求编码
             encodeRequest(channel, buffer, (Request) msg);
         } else if (msg instanceof Response) {
+            //响应编码
             encodeResponse(channel, buffer, (Response) msg);
         } else {
             super.encode(channel, buffer, msg);
@@ -297,6 +298,13 @@ public class ExchangeCodec extends TelnetCodec {
         buffer.writerIndex(savedWriteIndex + HEADER_LENGTH + len);
     }
 
+    /**
+     * 对返回结果进行编码
+     * @param channel
+     * @param buffer
+     * @param res
+     * @throws IOException
+     */
     protected void encodeResponse(Channel channel, ChannelBuffer buffer, Response res) throws IOException {
         int savedWriteIndex = buffer.writerIndex();
         try {
@@ -310,7 +318,7 @@ public class ExchangeCodec extends TelnetCodec {
             if (res.isHeartbeat()) {
                 header[2] |= FLAG_EVENT;
             }
-            // set response status.
+            // set response status. 和请求先比多了一个返回状态
             byte status = res.getStatus();
             header[3] = status;
             // set request id.
@@ -329,7 +337,7 @@ public class ExchangeCodec extends TelnetCodec {
                     if (res.isEvent()) {
                         encodeEventData(channel, out, res.getResult());
                     } else {
-                        encodeResponseData(channel, out, res.getResult(), res.getVersion());
+                        encodeResponseData(channel, out, res.getResult(), res.getVersion());//对方法的执行结果进行序列化
                     }
                     out.flushBuffer();
                     if (out instanceof Cleanable) {
@@ -337,6 +345,7 @@ public class ExchangeCodec extends TelnetCodec {
                     }
                 }
             } else {
+                //返回错误提示信息
                 ObjectOutput out = serialization.serialize(channel.getUrl(), bos);
                 out.writeUTF(res.getErrorMessage());
                 out.flushBuffer();
